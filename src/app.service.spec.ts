@@ -28,8 +28,8 @@ describe('isSpam', () => {
   it('should return true for content with a spam link', async () => {
     const spamQueryDto = new SpamQueryDto();
     spamQueryDto.content = 'Check https://www.spam.com';
-    spamQueryDto.spamLinkDomains = ['www.spam.com'];
-    spamQueryDto.redirectionDepth = 1;
+    spamQueryDto.spamLinkDomains = ['spam.com'];
+    spamQueryDto.redirectionDepth = 0;
 
     mockedAxios.get.mockResolvedValueOnce({
       status: 200,
@@ -42,7 +42,7 @@ describe('isSpam', () => {
   it('should follow redirects and identify spam', async () => {
     const spamQueryDto = new SpamQueryDto();
     spamQueryDto.content = 'Check this site https://redirect.to/spam';
-    spamQueryDto.spamLinkDomains = ['www.spam.com'];
+    spamQueryDto.spamLinkDomains = ['spam.com'];
     spamQueryDto.redirectionDepth = 2;
 
     mockedAxios.get.mockResolvedValueOnce({
