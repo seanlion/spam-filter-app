@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { SpamQueryDto } from './dto/spam.dto';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  async isSpam(spamQueryDto: SpamQueryDto): Promise<boolean> {
+    return true;
   }
 }
