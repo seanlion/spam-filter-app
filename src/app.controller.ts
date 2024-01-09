@@ -7,9 +7,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('/check_spam')
-  async checkSpam(
-    @Query('query') spamQueryDto: SpamQueryDto,
-  ): Promise<boolean> {
+  async checkSpam(@Query() spamQueryDto: SpamQueryDto): Promise<boolean> {
     return await this.appService.isSpam(spamQueryDto);
   }
 }
