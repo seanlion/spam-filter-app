@@ -25,6 +25,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@types/lodash": "^4.14.202",
+    "axios": "^1.6.5",
     "crossenv": "^0.0.2-security",
     "dotenv": "^16.3.1",
     "lodash": "^4.17.21",
