@@ -71,4 +71,23 @@ describe('isSpam', () => {
 
     await expect(service.isSpam(spamQueryDto)).resolves.toBe(true);
   });
+
+  it('should follow 2 redirects and identify spam', async () => {
+    const spamQueryDto = new SpamQueryDto();
+    spamQueryDto.content = 'Check spam https://moiming.page.link/exam2?_imcp=1';
+    spamQueryDto.spamLinkDomains = ['docs.github.com'];
+    spamQueryDto.redirectionDepth = 2;
+
+    mockedAxios.get.mockResolvedValueOnce({
+      status: 302,
+      headers: { location: 'https://github.com' },
+    });
+
+    mockedAxios.get.mockResolvedValueOnce({
+      status: 200,
+      data: '<html><body><a href="https://docs.github.com">GitHub Docs</a></body></html>',
+    });
+
+    await expect(service.isSpam(spamQueryDto)).resolves.toBe(true);
+  });
 });
