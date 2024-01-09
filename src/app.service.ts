@@ -8,7 +8,6 @@ export class AppService {
     const { content, spamLinkDomains, redirectionDepth } = spamQueryDto;
 
     const urls = this.extractURLsFromContent(content);
-
     const results = await Promise.all(
       urls.map(
         async (url) =>
@@ -51,10 +50,7 @@ export class AppService {
         const matches = [...response.data.matchAll(/<a href="([^"]*)"/gi)];
         for (const match of matches) {
           const href = match[1];
-          const hrefDomain = new URL(href).hostname.replace('www.', '');
-          if (spamLinkDomains.includes(hrefDomain)) {
-            return true;
-          }
+          return this.checkUrlIsSpam(href, depth - 1, spamLinkDomains);
         }
       }
     } catch (error) {
